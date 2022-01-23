@@ -1,0 +1,247 @@
+#include "ui/menudef.h"
+#include "ui_mp/common_macro.inc"
+#include "ui/frame.inc"
+
+#define CHOICE_GROUP					"stats"
+
+#include "ui/framestyle.inc"
+#include "ui/choices_setup_common.menu"
+
+#include "ui_mp/overlaybg.inc"
+#include "ui_mp/popup_player_info.inc"
+#include "ui_mp/newframe.inc"
+
+#define STATS_NAME_X					0
+#define STATS_NAME_Y					0
+
+#define MISSION_SELECT_NAME_X			-20
+#define MISSION_SELECT_NAME_Y			CHOICE_Y_START
+#define MISSION_SELECT_NAME_SIZE		ITEM_IMAGE_WIDTH 30
+
+#define ITEM_IMAGE_X					MISSION_SELECT_NAME_X
+#define ITEM_IMAGE_Y					(MISSION_SELECT_NAME_Y)
+#define ITEM_IMAGE_ASPECT_RATIO			(350/251)
+#define ITEM_IMAGE_WIDTH				(ITEM_IMAGE_HEIGHT * ITEM_IMAGE_ASPECT_RATIO)
+#define ITEM_IMAGE_HEIGHT				200
+#define ITEM_IMAGE_SIZE					ITEM_IMAGE_WIDTH ITEM_IMAGE_HEIGHT
+
+#define MISSION_SELECT_DESC_X			(ITEM_IMAGE_X + 2)
+#define MISSION_SELECT_DESC_Y			(ITEM_IMAGE_Y + ITEM_IMAGE_HEIGHT + 5)
+#define MISSION_SELECT_DESC_SIZE		(ITEM_IMAGE_WIDTH - 5) 75
+
+#undef CHOICE_Y_START
+#define CHOICE_Y_START					-125
+
+#undef CHOICE_X_START
+#define CHOICE_X_START					-270
+
+#undef CHOICE_SIZE_X
+#define CHOICE_SIZE_X					200
+
+#undef A_BUTTON_SIZE
+#define A_BUTTON_SIZE					A_BUTTON_SIZE_GLOBAL
+
+#undef CHOICE_TEXT_OFFSET_X
+#define CHOICE_TEXT_OFFSET_X			18
+
+#define COMBAT_RECORD_HEIGHT			NEW_FRAME_DEFAULT_HEIGHT
+#define COMBAT_RECORD_WIDTH				( COMBAT_RECORD_HEIGHT * FRAME_ASPECT_RATIO )
+
+#define PLAYER_RANK					dvarInt("zombie_rank")
+#define PLAYER_PRESTIGE				dvarInt("zombie_prestige")
+#define PLAYER_RANKXP				(dvarInt( "zombie_score" ))
+
+#define XP_BAR_X					( -COMBAT_RECORD_WIDTH / 2 + 80 )
+#define XP_BAR_Y					(FRAME_DEFAULT_HEIGHT/2-32)
+#define XP_BAR_BG_WIDTH				(FRAME_DEFAULT_WIDTH-135)
+#define XP_BAR_HEIGHT				20
+
+#define XP_TO_NEXT_RANK				dvarInt("zombie_def_rank_"+(PLAYER_RANK))
+#define MINXP_FOR_CURR_RANK			dvarInt("zombie_def_min_rank_"+PLAYER_RANK)
+#define NEXT_LEVEL					dvarInt("zombie_next_rank")
+#define XP_MAX						dvarInt("zombie_def_max_rank_"+(PLAYER_RANK))
+
+#define XP_BAR_WIDTH				( ( ( PLAYER_RANKXP - MINXP_FOR_CURR_RANK ) / XP_TO_NEXT_RANK ) * XP_BAR_BG_WIDTH  )
+
+#define XP_NEEDED_TO_LEVEL_UP		locString("MPUI_AAR_XP_NEEDED_CAPS", XP_MAX - PLAYER_RANKXP)
+
+#define XP_BAR \
+		/* BACKGROUND FOR XP BAR */ \
+		PREPROC_SHADER_DRAW_VIS_EX(	XP_BAR_X XP_BAR_Y XP_BAR_BG_WIDTH XP_BAR_HEIGHT CHOICE_HORIZONTAL_ALIGN CHOICE_VERTICAL_ALIGN, \
+									"white", BG_BACKCOLOR,  \ 
+									when( CAN_RANK_UP ), ; )  \
+		PREPROC_SHADER_DRAW_VIS_EX(	XP_BAR_X XP_BAR_Y XP_BAR_BG_WIDTH XP_BAR_HEIGHT CHOICE_HORIZONTAL_ALIGN CHOICE_VERTICAL_ALIGN, \
+									"menu_mp_bar_shadow", 1 1 1 0.2,  \
+									when( CAN_RANK_UP ), ; )  \
+		/* XP BAR */ \
+		PREPROC_SHADER_DRAW_ADV_VIS_EX(	XP_BAR_X, \
+										XP_BAR_Y, \
+										( XP_BAR_WIDTH ), \
+										XP_BAR_HEIGHT, \
+										CHOICE_HORIZONTAL_ALIGN CHOICE_VERTICAL_ALIGN, \
+										"menu_mp_combatrecord_bar", BAR_COLOR,  \
+										when( 1 ), \
+										; ) \
+		/* Label for "NEXT LEVEL" */	\
+		PREPROC_TEXT_DRAW( (XP_BAR_X-55) (XP_BAR_Y+4) 10 XP_BAR_HEIGHT CHOICE_HORIZONTAL_ALIGN CHOICE_VERTICAL_ALIGN, 0 0, "@MPUI_NEXT_LEVEL_CAPS", TEXTSIZE_SMALL, 0, 0, ITEM_ALIGN_TOP_LEFT, CHOICE_TEXTCOLOR ) \
+		/* value for XP NEEDED to next level */ \
+		PREPROC_TEXT_DRAW_VIS( (XP_BAR_X+5) (XP_BAR_Y+4) 10 XP_BAR_HEIGHT CHOICE_HORIZONTAL_ALIGN CHOICE_VERTICAL_ALIGN, 0 0, XP_NEEDED_TO_LEVEL_UP, TEXTSIZE_SMALL, 0, 0, ITEM_ALIGN_TOP_LEFT, CHOICE_TEXTCOLOR, when( 1 ) ) \
+		/* next level */ \
+		PREPROC_TEXT_DRAW_VIS( (XP_BAR_X+XP_BAR_BG_WIDTH+3) (XP_BAR_Y+2) 17 17 CHOICE_HORIZONTAL_ALIGN CHOICE_VERTICAL_ALIGN, 0 0, NEXT_LEVEL,	TEXTSIZE_SMALL, 0, 0, ITEM_ALIGN_MIDDLE_LEFT, CHOICE_TEXTCOLOR, when( 1 ) ) \
+
+
+
+
+
+
+#define MISSION_SELELCT_INFO( vis )																																\
+		/* Name */																																				\
+		PREPROC_TEXT_DRAW_ALL(	MISSION_SELECT_NAME_X MISSION_SELECT_NAME_Y MISSION_SELECT_NAME_SIZE HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER, 0 0,		\
+								"RANK: ",																					\
+								TEXTSIZE_SUBTITLE, 0, 0, ITEM_ALIGN_TOP_CENTER, 1 1 1 1,																		\
+								UI_FONT_EXTRABIG, ITEM_TEXTSTYLE_NORMAL, when( vis ), ; )																		\
+		/* Image */																																				\
+		PREPROC_SHADER_DRAW_VIS_EX( ITEM_IMAGE_X ITEM_IMAGE_Y ITEM_IMAGE_SIZE HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER,									\
+									"rank_cpl", 1 1 1 0.9, when( vis );, ; )															\
+		/* Description */																																		\
+		PREPROC_TEXT_DRAW_VIS_EX(	MISSION_SELECT_DESC_X MISSION_SELECT_DESC_Y MISSION_SELECT_DESC_SIZE HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER, 0 0,	\
+									"@"+dvarString( ui_level_loc_text )+"_DESC",																				\
+									TEXTSIZE_SMALL, 0, 0, ITEM_ALIGN_TOP_CENTER, WHITE,																			\
+									when( vis );, autowrapped )
+
+#define STATS_ATTR(vis)																																			\
+		PREPROC_TEXT_DRAW_ALL(	STATS_NAME_X STATS_NAME_Y MISSION_SELECT_NAME_SIZE HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER, 0 0,							\
+								"KILLS:",																														\
+								TEXTSIZE_SUBTITLE, 0, 0, ITEM_ALIGN_LEFT, 1 1 1 1,																				\
+								UI_FONT_EXTRABIG, ITEM_TEXTSTYLE_NORMAL, when( vis ), ; )	
+
+#define LOCAL_MAP_SELECTION_VIS( itemIndex, textArg, imageName, mapname, vis, redactStyle)																		\
+			FRAME_CHOICE_BUTTON_FOCUS_VIS_EX( itemIndex, "@"+textArg+"_CAPS",																					\
+							MAP_SELECTION_ACTION( mapname ),																									\
+							MAP_SELECTION_ONFOCUS( itemIndex, textArg, imageName ),																				\
+							;,																																	\
+							vis, ; )																															\
+							itemDef																																\
+							{																		\
+								style			WINDOW_STYLE_SHADER									\
+								rect			CHOICE_X( itemIndex ) CHOICE_Y( itemIndex ) CHOICE_SIZE_X 20 CHOICE_HORIZONTAL_ALIGN CHOICE_VERTICAL_ALIGN		\
+								forecolor		0 0 0 1												\
+								background		redactStyle											\
+								visible			when (!vis)											\
+								decoration															\
+							}
+
+#define LOCAL_STATS_ATTR(itemIndex, textArg, imageName, mapname, vis, redactStyle)																				\
+			TEMP_CHOICE_BUTTON_HIGHLIGHT_TEXT( itemIndex, "HELLOWORLD", 0 0 0 0, vis )																				\
+			/*TEMP_CHOICE_BUTTON_HIGHLIGHT_TEXT(itemIndex, 0 0,textArg, TEXTSIZE_DEFAULT, 22, 0, ITEM_ALIGN_MIDDLE_LEFT, 0 0 0 0, 1)	*/						\
+			FRAME_CHOICE_BUTTON_FOCUS_VIS_EX( itemIndex, textArg,																								\
+							MAP_SELECTION_ACTION( mapname ),																									\
+							MAP_SELECTION_ONFOCUS( itemIndex, textArg, imageName ),																				\
+							;,																																	\
+							vis, ; )																															\
+							itemDef																																\
+							{																																	\
+								style			WINDOW_STYLE_SHADER																								\
+								rect			CHOICE_X( itemIndex ) CHOICE_Y( itemIndex ) CHOICE_SIZE_X 20 CHOICE_HORIZONTAL_ALIGN CHOICE_VERTICAL_ALIGN		\
+								forecolor		0 0 0 1																											\
+								background		redactStyle																										\
+								visible			when (!vis)																										\
+								decoration																														\
+							}
+
+#define TEST_TEXT(itemIndex, textArg, statsDvar, vis)																											\
+	itemDef																																						\
+		{																																						\
+			rect			CHOICE_X( itemIndex ) CHOICE_Y( itemIndex ) CHOICE_SIZE_X 20 CHOICE_HORIZONTAL_ALIGN CHOICE_VERTICAL_ALIGN							\
+			type			ITEM_TYPE_TEXT																														\
+			textfont		UI_FONT_DEFAULT																														\
+			text			textArg																																\
+			textalign		ITEM_ALIGN_LEFT																														\
+			textscale		TEXTSIZE_DEFAULT																													\
+			forecolor		1 1 1 1									\
+			backcolor		0 0 0 0									\
+			textalignx 		5										\
+			textaligny 		0  										\
+			origin			0 0										\
+			visible			vis										\
+		}																																						\
+		itemDef																																					\
+		{																																						\
+			rect			CHOICE_X( itemIndex ) CHOICE_Y( itemIndex ) CHOICE_SIZE_X 20 CHOICE_HORIZONTAL_ALIGN CHOICE_VERTICAL_ALIGN							\
+			type			ITEM_TYPE_TEXT																														\
+			textfont		UI_FONT_DEFAULT																														\
+			dvar			statsDvar																															\
+			textalign		ITEM_ALIGN_RIGHT						\
+			textscale		TEXTSIZE_DEFAULT						\
+			forecolor		1 1 1 1									\
+			backcolor		0 0 0 0									\
+			textalignx 		0										\
+			textaligny 		0  										\
+			origin			0 0										\
+			visible			vis										\
+		}
+
+{
+
+	assetGlobalDef
+	{
+		fadeClamp						1
+		fadeCycle						1
+		fadeAmount						.1
+	}
+
+	menuDef
+	{
+		blurWorld				4.8
+		name				"zombie_stats"
+		rect					0 0 640 480 HORIZONTAL_ALIGN_FULLSCREEN VERTICAL_ALIGN_FULLSCREEN
+		focuscolor				COLOR_FOCUSED
+		style					WINDOW_STYLE_FILLED
+		priority				MENU_PRI_ONTOP
+		soundloop 				MENU_MUSIC
+		openSlideSpeed			DEFAULT_SLIDE_IN_SPEED
+		closeSlideSpeed			DEFAULT_SLIDE_OUT_SPEED
+		openSlideDirection		MENU_SLIDE_DIRECTION_TOP_TO_BOTTOM
+		closeSlideDirection		MENU_SLIDE_DIRECTION_TOP_TO_BOTTOM
+		
+#undef ON_ESC
+#define ON_ESC							\
+	play uin_navigation_menu_lg_close;	\
+			close blackout_3d_tv;		\
+			close self;
+			
+		onOpen	
+		{
+			setdvar ui_zombiemode 1;
+			focusfirst;
+			play uin_navigation_menu_lg_open;
+		}
+		onFocus { }
+		onClose	{ }
+		onESC	
+		{
+			ON_ESC
+		}
+
+		FRAME_ZOMBIE_DEFAULT
+		FRAME_TITLE_DEFAULT( "STATS", 1 )
+
+		TEST_TEXT(1, "Kills", "zombie_kills", 1)
+		TEST_TEXT(2, "Downs", "zombie_downs", 1)
+		TEST_TEXT(3, "Perks Consumed", "zombie_perks_consumed", 1)
+		TEST_TEXT(4, "Score", "zombie_score", 1)
+		TEST_TEXT(5, "Rounds", "zombie_rounds", 1)
+
+		MISSION_SELELCT_INFO(1)
+
+		XP_BAR
+
+#ifdef PC
+		NEW_FRAME_BACK_BUTTON_ACTION( FRAME_DEFAULT_WIDTH, FRAME_DEFAULT_HEIGHT, ON_ESC ; )
+#else //#ifdef PC
+		FRAME_BACK_BUTTON_DEFAULT
+#endif //#ifdef PC
+
+	}
+
+}
