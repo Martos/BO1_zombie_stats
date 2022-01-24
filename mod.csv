@@ -8,4 +8,6 @@ menufile,ui/menus.txt
 
 material,rank_prestige10_128
 material,rank_cpl
+material,rank_prvt
+material,rank_briggen
 material,menu_mp_combatrecord_bar
