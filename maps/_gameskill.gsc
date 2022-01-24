@@ -45,6 +45,20 @@ setSkill( reset, skill_override )
 		level.global_damage_func_ads = ::empty_kill_func; 
 		level.global_damage_func = ::empty_kill_func; 
 		level.global_kill_func = ::empty_kill_func; 
+
+		players = get_players();		
+		for( i = 0; i < players.size; i++ )
+		{
+			players[i].stats = [];
+			players[i].stats["kills"] = 0;
+			players[i].stats["score"] = 0;
+			players[i].stats["downs"] = 0;
+			players[i].stats["revives"] = 0;
+			players[i].stats["perks"] = 0;
+			players[i].stats["headshots"] = 0;
+			players[i].stats["zombie_gibs"] = 0;
+		}
+
 //CZ MM (09/17/09) Temp fix to prevent arcade mode from running until we get a separate Zombie mode entry in the menus.
 //		if ( GetDvar( #"arcademode" ) == "1" )
 		//if ( GetDvar( #"arcademode" ) == "1" && GetDvar( #"zombiemode" ) != "1" && GetDvar( #"g_gametype" ) != "vs" )
@@ -3005,8 +3019,8 @@ empty_kill_func( type, loc, point, attacker, amount )
 		SetDvar("zombie_downs", level.totalDowns + players[i].stats["downs"]);
 		SetDvar("zombie_rounds", level.totalRounds + (level.round_number - 1));
 
-		iPrintLn(GetDvarInt("zombie_def_rank_"+ (level.playerRank+1)) - GetDvarInt("zombie_score"));
-		if((level.playerNextRankXpNeed - level.totalScore) <= 0) {
+		iPrintLn((GetDvarInt("zombie_def_min_rank_"+(level.playerRank+1)) - GetDvarInt("zombie_score")));
+		if((GetDvarInt("zombie_def_min_rank_"+(level.playerRank+1)) - GetDvarInt("zombie_score")) <= 0) {
 			level.playerRank++;
 
 			SetDvar("zombie_rank", level.playerRank);
