@@ -95,17 +95,11 @@
 #define MISSION_SELELCT_INFO( vis )																																\
 		/* Name */																																				\
 		PREPROC_TEXT_DRAW_ALL(	MISSION_SELECT_NAME_X MISSION_SELECT_NAME_Y MISSION_SELECT_NAME_SIZE HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER, 0 0,		\
-								"RANK: ",																					\
+								"RANK: ",																														\
 								TEXTSIZE_SUBTITLE, 0, 0, ITEM_ALIGN_TOP_CENTER, 1 1 1 1,																		\
 								UI_FONT_EXTRABIG, ITEM_TEXTSTYLE_NORMAL, when( vis ), ; )																		\
 		/* Image */																																				\
-		PREPROC_SHADER_DRAW_VIS_EX( ITEM_IMAGE_X ITEM_IMAGE_Y ITEM_IMAGE_SIZE HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER,									\
-									"rank_cpl", 1 1 1 0.9, when( vis );, ; )															\
-		/* Description */																																		\
-		PREPROC_TEXT_DRAW_VIS_EX(	MISSION_SELECT_DESC_X MISSION_SELECT_DESC_Y MISSION_SELECT_DESC_SIZE HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER, 0 0,	\
-									"@"+dvarString( ui_level_loc_text )+"_DESC",																				\
-									TEXTSIZE_SMALL, 0, 0, ITEM_ALIGN_TOP_CENTER, WHITE,																			\
-									when( vis );, autowrapped )
+		PREPROC_SHADER_DRAW_VIS_EX( ITEM_IMAGE_X ITEM_IMAGE_Y ITEM_IMAGE_SIZE HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER, "rank_cpl", 1 1 1 0.9, when( vis );, ; )															\
 
 #define STATS_ATTR(vis)																																			\
 		PREPROC_TEXT_DRAW_ALL(	STATS_NAME_X STATS_NAME_Y MISSION_SELECT_NAME_SIZE HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER, 0 0,							\
