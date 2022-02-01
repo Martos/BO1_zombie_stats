@@ -3019,7 +3019,6 @@ empty_kill_func( type, loc, point, attacker, amount )
 		SetDvar("zombie_downs", level.totalDowns + players[i].stats["downs"]);
 		SetDvar("zombie_rounds", level.totalRounds + (level.round_number - 1));
 
-		iPrintLn((GetDvarInt("zombie_def_min_rank_"+(level.playerRank+1)) - GetDvarInt("zombie_score")));
 		if((GetDvarInt("zombie_def_min_rank_"+(level.playerRank+1)) - GetDvarInt("zombie_score")) <= 0) {
 			level.playerRank++;
 
@@ -3029,8 +3028,6 @@ empty_kill_func( type, loc, point, attacker, amount )
 			level.playerNextRankXpNeed = GetDvarInt("zombie_def_rank_" + (level.playerRank+1));
 			level.playerMinRankXp = GetDvarInt("zombie_def_min_rank_" + level.playerRank);
 		}
-
-		iPrintLn("RANK: " + level.playerRank);
 
 	}
 }

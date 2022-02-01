@@ -1541,13 +1541,14 @@ onPlayerConnect_clientDvars()
 		"compass", "0",
 		"hud_showStance", "0",
 		"cg_thirdPerson", "0",
-		"cg_fov", "65",
+		"cg_fov", "90",
 		"cg_thirdPersonAngle", "0",
 		"ammoCounterHide", "1",
 		"miniscoreboardhide", "1",
 		"cg_drawSpectatorMessages", "0",
 		"ui_hud_hardcore", "0",
-		"playerPushAmount", "1" );
+		"playerPushAmount", "1",
+		"cg_ScoresColor_Zombie", "0 0 1 1" );
 
 	self SetDepthOfField( 0, 0, 512, 4000, 4, 0 );
 
