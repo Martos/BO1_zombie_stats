@@ -41,6 +41,7 @@ setSkill( reset, skill_override )
 		level.totalScore = GetDvarInt("zombie_score");
 		level.totalDowns = GetDvarInt("zombie_downs");
 		level.totalRounds = GetDvarInt("zombie_rounds");
+		level.totalHeadshots = GetDvarInt("zombie_headshots");
 	
 		level.global_damage_func_ads = ::empty_kill_func; 
 		level.global_damage_func = ::empty_kill_func; 
@@ -3018,6 +3019,7 @@ empty_kill_func( type, loc, point, attacker, amount )
 		SetDvar("zombie_perks_consumed", level.perksConsumed + players[i].stats["perks"]);
 		SetDvar("zombie_downs", level.totalDowns + players[i].stats["downs"]);
 		SetDvar("zombie_rounds", level.totalRounds + (level.round_number - 1));
+		SetDvar("zombie_heashots", level.totalHeadshots + players[i].stats["headshots"]);
 
 		if((GetDvarInt("zombie_def_min_rank_"+(level.playerRank+1)) - GetDvarInt("zombie_score")) <= 0) {
 			level.playerRank++;

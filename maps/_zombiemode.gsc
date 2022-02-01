@@ -9,6 +9,10 @@
 
 main()
 {
+	PrecacheString(&"MPUI_MATCHBONUS_CAPS");
+	precachestring( &"SCRIPT_PLUS" );
+	PrecacheString(&"MP_MATCH_BONUS_IS");
+
 	level.player_too_many_weapons_monitor = true;
 	level.player_too_many_weapons_monitor_func = ::player_too_many_weapons_monitor;
 	level._dontInitNotifyMessage = 1;
@@ -5089,6 +5093,7 @@ end_game()
 	game_over = [];
 	survived = [];
 	bonusXp = [];
+	bonusXpValue = [];
 	
 	players = get_players();
 	for( i = 0; i < players.size; i++ )
@@ -5132,12 +5137,13 @@ end_game()
 		bonusXp[i].alignY = "middle";
 		bonusXp[i].horzAlign = "center";
 		bonusXp[i].vertAlign = "middle";
-		bonusXp[i].y -= 70;
+		bonusXp[i].y += 20;
+		bonusXp[i].x -= 30;
 		bonusXp[i].foreground = true;
 		bonusXp[i].fontScale = 2;
 		bonusXp[i].alpha = 0;
 		bonusXp[i].color = ( 1.0, 1.0, 1.0 );
-		bonusXp[i] SetText( "BONUS XP " );
+		bonusXp[i] SetText( &"MPUI_MATCHBONUS_CAPS");
 
 		bonusXp[i] FadeOverTime( 1 );
 		bonusXp[i].alpha = 1;
@@ -5145,6 +5151,31 @@ end_game()
 		{
 			bonusXp[i].y += 40;
 		}
+
+		bonusPointsValue = 500;//10 + randomintrange(players[i].kills, players[i].kills * 10);
+
+		bonusXpValue[i] = NewClientHudElem( players[i] );
+		bonusXpValue[i].alignX = "center";
+		bonusXpValue[i].alignY = "middle";
+		bonusXpValue[i].horzAlign = "center";
+		bonusXpValue[i].vertAlign = "middle";
+		bonusXpValue[i].y += 20;
+		bonusXpValue[i].x += 70;
+		bonusXpValue[i].foreground = true;
+		bonusXpValue[i].fontScale = 2;
+		bonusXpValue[i].alpha = 0;
+		bonusXpValue[i].color = ( 1, 1, 0.65 );
+		bonusXpValue[i].label = &"SCRIPT_PLUS";
+		bonusXpValue[i] setValue( bonusPointsValue );
+
+		bonusXpValue[i] FadeOverTime( 1 );
+		bonusXpValue[i].alpha = 1;
+		if ( players[i] isSplitScreen() )
+		{
+			bonusXpValue[i].y += 40;
+		}
+
+		players[i] maps\_zombiemode_score::player_add_points( "bonus_points_powerup", bonusPointsValue );
 
 		//OLD COUNT METHOD
 		if( level.round_number < 2 )
@@ -5210,6 +5241,8 @@ end_game()
 		game_over[i].alpha = 0;
 		bonusXp[i] FadeOverTime( 1 );
 		bonusXp[i].alpha = 0;
+		bonusXpValue[i] FadeOverTime( 1 );
+		bonusXpValue[i].alpha = 0;
 	}
 
 	wait( 1.5 );
