@@ -1,8 +1,6 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/Martos/BO1_zombie_stats)
 
-### Call of Duty - Black Ops Zombie Stats
-
-<br/>
+# Call of Duty - Black Ops Zombie Stats
 
 - Custom stats system
 - End game xp bonus
@@ -11,12 +9,8 @@
 - Limit perks removed
 - Working on all languages
 
-<br/>
-
 ### In game screen
 ![Alt text](/screenshots/shot0001.jpg?raw=true "Optional Title")
-
-<br/>
 
 ### Requirements
 * Call of Duty Black Ops base game
