@@ -9,9 +9,9 @@
 - Limit perks removed
 - Working on all languages
 
-### In game screen
+## In game screen
 ![Alt text](/screenshots/shot0001.jpg?raw=true "Optional Title")
 
-### Requirements
+## Requirements
 * Call of Duty Black Ops base game
 * [Linker mod](https://github.com/Nukem9/LinkerMod)
