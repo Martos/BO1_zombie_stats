@@ -2,6 +2,8 @@
 
 ### Call of Duty - Black Ops Zombie Stats
 
+<br/>
+
 - Custom stats system
 - End game xp bonus
 - Working on all zombie maps
@@ -9,8 +11,12 @@
 - Limit perks removed
 - Working on all languages
 
+<br/>
+
 ### In game screen
 ![Alt text](/screenshots/shot0001.jpg?raw=true "Optional Title")
+
+<br/>
 
 ### Requirements
 * Call of Duty Black Ops base game
