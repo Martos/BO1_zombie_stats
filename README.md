@@ -1,6 +1,6 @@
-### Call of Duty - Black Ops Zombie Stats
-
 ![GitHub last commit](https://img.shields.io/github/last-commit/Martos/BO1_zombie_stats)
+
+### Call of Duty - Black Ops Zombie Stats
 
 - Custom stats system
 - End game xp bonus
