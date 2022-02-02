@@ -1,7 +1,12 @@
 ### Call of Duty - Black Ops Zombie Stats
 
-- Full working experience working with all ranks and prestige
-- Full-stats with all maps
+- Custom stats system
+- Working on all zombie maps
+- Black Ops 2 Ranks icons
+- Limit perks removed
+
+### In game screen
+![Alt text](/screenshots/shot0001.jpg?raw=true "Optional Title")
 
 ### Requirements
 * Call of Duty Black Ops base game
