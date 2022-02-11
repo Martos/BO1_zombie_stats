@@ -13,6 +13,10 @@ main()
 	precachestring( &"SCRIPT_PLUS" );
 	PrecacheString(&"MP_MATCH_BONUS_IS");
 
+	precacheString( &"RANK_PLAYER_WAS_PROMOTED_N" );
+	precacheString( &"RANK_PLAYER_WAS_PROMOTED" );
+	precacheString( &"RANK_PROMOTED" );
+
 	level.player_too_many_weapons_monitor = true;
 	level.player_too_many_weapons_monitor_func = ::player_too_many_weapons_monitor;
 	level._dontInitNotifyMessage = 1;
@@ -493,6 +497,10 @@ precache_shaders()
 	PrecacheShader( "zom_icon_community_pot_strip" );
 
 	precacheshader("zom_icon_player_life");
+
+	PrecacheShader( "rank_1" );
+	PrecacheShader( "rank_2" );
+	PrecacheShader( "rank_3" );
 }
 
 precache_models()
@@ -1685,6 +1693,19 @@ onPlayerSpawned()
 				
 			}
 		}
+
+		rank_hud = create_simple_hud( self );
+		rank_hud.foreground = false; 
+		rank_hud.sort = 1; 
+		rank_hud.hidewheninmenu = true;
+		rank_hud.alignX = "right"; 
+		rank_hud.alignY = "bottom";
+		rank_hud.horzAlign = "user_right"; 
+		rank_hud.vertAlign = "user_bottom";
+		rank_hud.x = -105;
+		rank_hud.y = rank_hud.y - 85;
+		rank_hud.alpha = 1;
+		rank_hud SetShader( "rank_1", 24, 24 );
 	}
 }
 

@@ -4,6 +4,13 @@
 
 init()
 {
+	level.perksConsumed = GetDvarInt("zombie_perks_consumed");
+	level.totalKils = GetDvarInt("zombie_kills");
+	level.totalScore = GetDvarInt("zombie_score");
+	level.totalDowns = GetDvarInt("zombie_downs");
+	level.totalRounds = GetDvarInt("zombie_rounds");
+	level.totalHeadshots = GetDvarInt("zombie_headshots");
+
 	team_score_init();
 }
 
@@ -135,6 +142,25 @@ player_add_points( event, mod, hit_location ,is_dog)
 
 	//stat tracking
 	self.stats["score"] = self.score_total;
+
+	SetDvar("zombie_score", level.totalScore + self.stats["score"]);
+	SetDvar("zombie_kills", level.totalKils + self.stats["kills"]);
+	SetDvar("zombie_perks_consumed", level.perksConsumed + self.stats["perks"]);
+	SetDvar("zombie_downs", level.totalDowns + self.stats["downs"]);
+	SetDvar("zombie_rounds", level.totalRounds + (level.round_number - 1));
+	SetDvar("zombie_heashots", level.totalHeadshots + self.stats["headshots"]);
+
+	if((GetDvarInt("zombie_def_min_rank_"+(level.playerRank+1)) - GetDvarInt("zombie_score")) <= 0) {
+		level.playerRank++;
+
+		SetDvar("zombie_rank", level.playerRank);
+		SetDvar("zombie_next_rank", level.playerRank+1);
+
+		level.playerNextRankXpNeed = GetDvarInt("zombie_def_rank_" + (level.playerRank+1));
+		level.playerMinRankXp = GetDvarInt("zombie_def_min_rank_" + level.playerRank);
+
+		//self thread updateRankAnnounceHUD();
+	}
 
 //	self thread play_killstreak_vo();
 }

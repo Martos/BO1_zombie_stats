@@ -35,13 +35,6 @@ setSkill( reset, skill_override )
 
 		level.playerNextRankXpNeed = GetDvarInt("zombie_def_rank_" + (level.playerRank+1));
 		level.playerMinRankXp = GetDvarInt("zombie_def_min_rank_" + level.playerRank);
-
-		level.perksConsumed = GetDvarInt("zombie_perks_consumed");
-		level.totalKils = GetDvarInt("zombie_kills");
-		level.totalScore = GetDvarInt("zombie_score");
-		level.totalDowns = GetDvarInt("zombie_downs");
-		level.totalRounds = GetDvarInt("zombie_rounds");
-		level.totalHeadshots = GetDvarInt("zombie_headshots");
 	
 		level.global_damage_func_ads = ::empty_kill_func; 
 		level.global_damage_func = ::empty_kill_func; 
@@ -2991,6 +2984,35 @@ zombieStatSet( dataName, value )
 	self setdstat( "PlayerStatsList", dataName, value );
 }
 
+getRankInfoFull( rankId )
+{
+	return tableLookupIString( "mp/ranktable.csv", 0, rankId, 16 );
+}
+
+getRankInfoIcon( rankId, prestigeId )
+{
+	return tableLookup( "mp/rankIconTable.csv", 0, rankId, prestigeId+1 );
+}
+
+updateRankAnnounceHUD()
+{
+	self endon("disconnect");
+	
+	notifyData = spawnStruct();
+	notifyData.titleText = &"RANK_PROMOTED";
+	notifyData.iconName = "rank_prvt";
+	notifyData.sound = "mp_level_up";
+	notifyData.duration = 4.0;
+	
+	notifyData.textLabel = "rank_prvt";
+	notifyData.notifyText = &"RANK_ROMANI";
+	notifyData.textIsString = true;
+
+	iPrintLn(&"RANK_PROMOTED");
+
+	self thread maps\_hud_message::notifyMessage( notifyData );
+}
+
 empty_kill_func( type, loc, point, attacker, amount )
 {
 	players = get_players();		
@@ -3013,24 +3035,6 @@ empty_kill_func( type, loc, point, attacker, amount )
 		players[i] zombieStatSet( "zombie_perks_consumed", total_perks );
 		players[i] zombieStatSet( "zombie_heashots", total_headshots );
 		players[i] zombieStatSet( "zombie_gibs", total_zombie_gibs );
-
-		SetDvar("zombie_score", level.totalScore + players[i].stats["score"]);
-		SetDvar("zombie_kills", level.totalKils + players[i].stats["kills"]);
-		SetDvar("zombie_perks_consumed", level.perksConsumed + players[i].stats["perks"]);
-		SetDvar("zombie_downs", level.totalDowns + players[i].stats["downs"]);
-		SetDvar("zombie_rounds", level.totalRounds + (level.round_number - 1));
-		SetDvar("zombie_heashots", level.totalHeadshots + players[i].stats["headshots"]);
-
-		if((GetDvarInt("zombie_def_min_rank_"+(level.playerRank+1)) - GetDvarInt("zombie_score")) <= 0) {
-			level.playerRank++;
-
-			SetDvar("zombie_rank", level.playerRank);
-			SetDvar("zombie_next_rank", level.playerRank+1);
-
-			level.playerNextRankXpNeed = GetDvarInt("zombie_def_rank_" + (level.playerRank+1));
-			level.playerMinRankXp = GetDvarInt("zombie_def_min_rank_" + level.playerRank);
-		}
-
 	}
 }
 

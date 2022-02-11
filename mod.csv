@@ -6,7 +6,9 @@ rawfile,maps/_zombiemode_score.gsc
 menufile,ui/main_online.menu
 menufile,ui/levels.menu
 menufile,ui/zombie_stats.menu
+menufile,ui/objective_info.menu
 menufile,ui/menus.txt
+menufile,ui/ingame.txt
 material,menu_mp_combatrecord_bar
 material,rank_1
 material,rank_2
