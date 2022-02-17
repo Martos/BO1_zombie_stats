@@ -91,9 +91,6 @@
 		/* next level rank icon */ \
 		RANK_ICON_ADV(	(XP_BAR_X+XP_BAR_BG_WIDTH+6+getTextWidth( NEXT_LEVEL, CHOICE_TEXTFONT, TEXTSIZE_DEFAULT )), (XP_BAR_Y+2), HORIZONTAL_ALIGN_CENTER VERTICAL_ALIGN_CENTER, "specialty_doubletap_zombies", when( 1 ) ) \
 
-
-
-
 #undef CHOICE_BUTTON_NAME
 #define CHOICE_BUTTON_NAME		"pausedmenu_"
 #undef MENUDEF_NAME
