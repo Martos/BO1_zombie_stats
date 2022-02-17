@@ -4,14 +4,14 @@
 
 - Custom stats system
 - End game xp bonus
-- Working on all zombie maps
+- Working on all DLC
 - Black Ops 2 Ranks icons
 - Limit perks removed
-- Working on all languages
+- Localized on all languages
 - And more ...
 
 ## In game screen
-![Alt text](/screenshots/shot0001.jpg?raw=true "Optional Title")
+![Alt text](/screenshots/shot0001.jpg?raw=true "Stats Menu")
 
 ## Requirements
 * Call of Duty Black Ops base game
