@@ -3,6 +3,7 @@ rawfile,maps/_zombiemode.gsc
 rawfile,maps/_zombiemode_perks.gsc
 rawfile,maps/_load.gsc
 rawfile,maps/_zombiemode_score.gsc
+rawfile,maps/_aimassist.gsc
 menufile,ui/main_online.menu
 menufile,ui/levels.menu
 menufile,ui/zombie_stats.menu

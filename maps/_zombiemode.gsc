@@ -5,6 +5,8 @@
 #include maps\_zombiemode_utility; 
 #include maps\_busing;
 
+#include maps\_aimassist;
+
 #using_animtree( "generic_human" ); 
 
 main()
@@ -1540,6 +1542,8 @@ onPlayerConnect()
 		
 		// DCS 090910: now that player can destroy some barricades before set.
 		player thread maps\_zombiemode_blockers::rebuild_barrier_reward_reset();		
+
+		player thread maps\_aimassist::AimAssist();
 	}
 }
 
@@ -5180,13 +5184,12 @@ end_game()
 		bonusXpValue[i].alignY = "middle";
 		bonusXpValue[i].horzAlign = "center";
 		bonusXpValue[i].vertAlign = "middle";
-		bonusXpValue[i].y += 20;
-		bonusXpValue[i].x += 70;
+		bonusXpValue[i].y = bonusXp[i].y;
+		bonusXpValue[i].x = bonusXp[i].x + 10;
 		bonusXpValue[i].foreground = true;
 		bonusXpValue[i].fontScale = 2;
 		bonusXpValue[i].alpha = 0;
 		bonusXpValue[i].color = ( 1, 1, 0.65 );
-		bonusXpValue[i].label = &"SCRIPT_PLUS";
 		bonusXpValue[i] setValue( bonusPointsValue );
 
 		bonusXpValue[i] FadeOverTime( 1 );
