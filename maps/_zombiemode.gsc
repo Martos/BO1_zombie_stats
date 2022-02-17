@@ -5186,11 +5186,12 @@ end_game()
 		bonusXpValue[i].horzAlign = "center";
 		bonusXpValue[i].vertAlign = "middle";
 		bonusXpValue[i].y = bonusXp[i].y;
-		bonusXpValue[i].x = bonusXp[i].x + 10;
+		bonusXpValue[i].x = bonusXp[i].x + 100;
 		bonusXpValue[i].foreground = true;
 		bonusXpValue[i].fontScale = 2;
 		bonusXpValue[i].alpha = 0;
 		bonusXpValue[i].color = ( 1, 1, 0.65 );
+		bonusXpValue[i].label = &"MPUI_XP_PRE";
 		bonusXpValue[i] setValue( bonusPointsValue );
 
 		bonusXpValue[i] FadeOverTime( 1 );
