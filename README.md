@@ -12,6 +12,7 @@
 
 ## In game screen
 ![Alt text](/screenshots/shot0001.jpg?raw=true "Stats Menu")
+![Alt text](/screenshots/shot0002.png?raw=true "In game HUD")
 
 ## Requirements
 * Call of Duty Black Ops base game
