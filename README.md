@@ -10,7 +10,7 @@
 - Localized on all languages
 - And more ...
 
-## In game screen
+## In game screens
 ![Alt text](/screenshots/shot0001.jpg?raw=true "Stats Menu")
 ![Alt text](/screenshots/shot0002.png?raw=true "In game HUD")
 
