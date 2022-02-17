@@ -1543,7 +1543,8 @@ onPlayerConnect()
 		// DCS 090910: now that player can destroy some barricades before set.
 		player thread maps\_zombiemode_blockers::rebuild_barrier_reward_reset();		
 
-		player thread maps\_aimassist::AimAssist();
+		if(GetDvar("gpad_enabled") == "1")
+			player thread maps\_aimassist::AimAssist();
 	}
 }
 
