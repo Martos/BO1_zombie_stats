@@ -851,6 +851,11 @@ onPlayerSpawned()
 		self GiveWeapon( "m1911_zm", 0, 15 );
 		self SetSpawnWeapon( "m1911_zm" );
 
+		if(GetDvarInt("zombie_rank") == 55) {
+			self GiveWeapon("ray_gun_zm");
+			self SetSpawnWeapon( "ray_gun_zm" );
+		}
+
 		//self GiveWeapon( "commando_zm", 0, 14 );
 		//self SetSpawnWeapon( "commando_zm" );
 
