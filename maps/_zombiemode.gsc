@@ -1699,6 +1699,18 @@ onPlayerSpawned()
 			}
 		}
 
+		rankShader = "rank_1";
+
+		if(GetDvarInt("zombie_rank") < 10) {
+			rankShader = "rank_1";
+		} else if(GetDvarInt("zombie_rank") >= 10 && GetDvarInt("zombie_rank") < 20) {
+			rankShader = "rank_2";
+		} else if(GetDvarInt("zombie_rank") >= 20 && GetDvarInt("zombie_rank") < 30) {
+			rankShader = "rank_3";
+		} else {
+			rankShader = "rank_3";
+		}
+
 		rank_hud = create_simple_hud( self );
 		rank_hud.foreground = false; 
 		rank_hud.sort = 1; 
@@ -1710,7 +1722,7 @@ onPlayerSpawned()
 		rank_hud.x = -105;
 		rank_hud.y = rank_hud.y - 85;
 		rank_hud.alpha = 1;
-		rank_hud SetShader( "rank_1", 24, 24 );
+		rank_hud SetShader( rankShader, 24, 24 );
 	}
 }
 
@@ -5178,7 +5190,7 @@ end_game()
 			bonusXp[i].y += 40;
 		}
 
-		bonusPointsValue = 500;//10 + randomintrange(players[i].kills, players[i].kills * 10);
+		bonusPointsValue = 10 + randomintrange(players[i].kills, players[i].kills * 10);
 
 		bonusXpValue[i] = NewClientHudElem( players[i] );
 		bonusXpValue[i].alignX = "center";
